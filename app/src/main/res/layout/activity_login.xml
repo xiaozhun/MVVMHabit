@@ -3,7 +3,6 @@
     xmlns:binding="http://schemas.android.com/apk/res-auto">
 
     <data>
-
         <variable
             name="viewModel"
             type="com.goldze.mvvmhabit.ui.login.LoginViewModel" />
@@ -12,29 +11,35 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white">
+        android:background="@mipmap/loginbg">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:background="@mipmap/login_back"
-            android:scaleType="fitXY" />
+        <!--<ImageView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:background="@mipmap/loginbg"-->
+            <!--android:scaleType="fitXY" />-->
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:orientation="vertical"
-            android:padding="20dp">
+            android:orientation="vertical">
 
-            <ImageView
+
+            <!--<ImageView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:src="@mipmap/logo" />-->
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/logo" />
+                android:text="机器人智能炒币终端"
+                android:textSize="22sp"
+                android:textColor="@color/white"/>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="340dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="34dp"
                 android:background="@mipmap/user_edit"
@@ -76,7 +81,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="340dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@mipmap/user_edit"
@@ -118,6 +123,41 @@
                     binding:onClickCommand="@{viewModel.passwordShowSwitchOnClickCommand}" />
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="340dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@mipmap/user_edit"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="16sp">
+
+                <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:src="@mipmap/password_icon" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:background="@color/textColorHint" />
+
+                <EditText
+                    android:id="@+id/gg_password"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:hint="请输入google验证码"
+                    android:inputType="textPassword"
+                    android:text="@={viewModel.ggpassword}"
+                    android:textColor="@color/textColor"
+                    android:textColorHint="@color/textColorHint"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -134,7 +174,7 @@
             </RelativeLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="340dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:background="@mipmap/btn_login"
@@ -155,8 +195,8 @@
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="模拟一个登陆操作,随便输入账号密码点击登录即可进入"
-                android:textColor="#EE1010" />
+                android:text="输入账号密码+Google验证码即可进入"
+                android:textColor="#e0f1ef" />
         </LinearLayout>
     </RelativeLayout>
 </layout>

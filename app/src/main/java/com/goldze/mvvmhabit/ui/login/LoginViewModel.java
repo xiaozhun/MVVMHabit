@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.goldze.mvvmhabit.data.DemoRepository;
+import com.goldze.mvvmhabit.entity.LoginEntity;
 import com.goldze.mvvmhabit.ui.main.DemoActivity;
 
 import io.reactivex.disposables.Disposable;
@@ -17,6 +18,7 @@ import me.goldze.mvvmhabit.binding.command.BindingAction;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
 import me.goldze.mvvmhabit.binding.command.BindingConsumer;
 import me.goldze.mvvmhabit.bus.event.SingleLiveEvent;
+import me.goldze.mvvmhabit.http.BaseResponse;
 import me.goldze.mvvmhabit.utils.RxUtils;
 import me.goldze.mvvmhabit.utils.ToastUtils;
 
@@ -29,6 +31,8 @@ public class LoginViewModel extends BaseViewModel<DemoRepository> {
     public ObservableField<String> userName = new ObservableField<>("");
     //密码的绑定
     public ObservableField<String> password = new ObservableField<>("");
+    //google验证码的绑定
+    public ObservableField<String> ggpassword = new ObservableField<>("");
     //用户名清除按钮的显示隐藏绑定
     public ObservableInt clearBtnVisibility = new ObservableInt();
     //封装一个界面发生改变的观察者
@@ -92,8 +96,12 @@ public class LoginViewModel extends BaseViewModel<DemoRepository> {
             ToastUtils.showShort("请输入密码！");
             return;
         }
+//        if (TextUtils.isEmpty(ggpassword.get())) {
+//            ToastUtils.showShort("请输入google验证码！");
+//            return;
+//        }
         //RaJava模拟登录
-        addSubscribe(model.login()
+        addSubscribe(model.login(userName.get(),password.get())
                 .compose(RxUtils.schedulersTransformer()) //线程调度
                 .doOnSubscribe(new Consumer<Disposable>() {
                     @Override
@@ -101,19 +109,21 @@ public class LoginViewModel extends BaseViewModel<DemoRepository> {
                         showDialog();
                     }
                 })
-                .subscribe(new Consumer<Object>() {
+                .subscribe(new Consumer<BaseResponse<LoginEntity>>() {
                     @Override
-                    public void accept(Object o) throws Exception {
+                    public void accept(BaseResponse<LoginEntity> loginEntityBaseResponse) throws Exception {
                         dismissDialog();
+                        ToastUtils.showShort(loginEntityBaseResponse.getResult().getMessage());
                         //保存账号密码
                         model.saveUserName(userName.get());
                         model.savePassword(password.get());
                         //进入DemoActivity页面
-                        startActivity(DemoActivity.class);
+//                        startActivity(DemoActivity.class);
                         //关闭页面
-                        finish();
+//                        finish();
                     }
-                }));
+                })
+                );
 
     }
 

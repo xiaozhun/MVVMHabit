@@ -1,6 +1,7 @@
 package com.goldze.mvvmhabit.data.source.http.service;
 
 import com.goldze.mvvmhabit.entity.DemoEntity;
+import com.goldze.mvvmhabit.entity.LoginEntity;
 
 import io.reactivex.Observable;
 import me.goldze.mvvmhabit.http.BaseResponse;
@@ -20,4 +21,8 @@ public interface DemoApiService {
     @FormUrlEncoded
     @POST("action/apiv2/banner")
     Observable<BaseResponse<DemoEntity>> demoPost(@Field("catalog") String catalog);
+
+    @FormUrlEncoded
+    @POST("login")
+    Observable<BaseResponse<LoginEntity>> loginPost(@Field("username") String username,@Field("password") String password);
 }
