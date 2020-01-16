@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment;
 
 
 import com.goldze.mvvmhabit.ui.base.fragment.BasePagerFragment;
-import com.goldze.mvvmhabit.ui.tab_bar.fragment.TabBar1Fragment;
+import com.goldze.mvvmhabit.ui.tab_bar.fragment.TabBarApps;
 import com.goldze.mvvmhabit.ui.tab_bar.fragment.TabBar2Fragment;
 import com.goldze.mvvmhabit.ui.tab_bar.fragment.TabBar3Fragment;
 import com.goldze.mvvmhabit.ui.tab_bar.fragment.TabBar4Fragment;
@@ -22,7 +22,7 @@ public class ViewPagerGroupFragment extends BasePagerFragment {
     @Override
     protected List<Fragment> pagerFragment() {
         List<Fragment> list = new ArrayList<>();
-        list.add(new TabBar1Fragment());
+        list.add(new TabBarApps());
         list.add(new TabBar2Fragment());
         list.add(new TabBar3Fragment());
         list.add(new TabBar4Fragment());

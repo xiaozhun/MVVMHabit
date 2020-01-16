@@ -3,13 +3,13 @@
 
     <data>
 
-        <import type="com.goldze.mvvmhabit.ui.viewpager.vm.ViewPagerViewModel" />
+        <import type="com.goldze.mvvmhabit.ui.tab_bar.vm.TabBarAppsViewModel" />
 
-        <import type="com.goldze.mvvmhabit.ui.viewpager.adapter.ViewPagerBindingAdapter" />
+        <import type="com.goldze.mvvmhabit.ui.tab_bar.adapter.ViewPagerBindingAdapter" />
 
         <variable
             name="viewModel"
-            type="ViewPagerViewModel" />
+            type="TabBarAppsViewModel" />
 
         <variable
             name="adapter"
@@ -34,7 +34,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#F0F0F0" />
+            android:background="#8BC34A" />
 
         <android.support.v4.view.ViewPager
             android:id="@+id/viewPager"

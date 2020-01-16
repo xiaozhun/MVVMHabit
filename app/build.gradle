@@ -9,6 +9,12 @@ android {
         versionCode rootProject.ext.android.versionCode
         versionName rootProject.ext.android.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        //添加如下配置 开启annotation processor
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath true
+            }
+        }
     }
     buildTypes {
         release {
@@ -46,4 +52,14 @@ dependencies {
     //内存泄漏测试
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.2'
     debugImplementation 'com.squareup.leakcanary:leakcanary-support-fragment:1.6.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'junit:junit:4.12'
+    //lombok
+    compileOnly "org.projectlombok:lombok:1.18.6"
+    implementation 'org.glassfish:javax.annotation:10.0-b28' //java注解
+    // Android test
+    androidTestImplementation "com.android.support.test:runner:0.3"
+    androidTestImplementation "com.android.support.test:rules:0.3"
+    androidTestImplementation "com.android.support.test.uiautomator:uiautomator-v18:2.1.2"
+    //release
 }

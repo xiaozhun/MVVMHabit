@@ -8,8 +8,9 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.goldze.mvvmhabit.data.DemoRepository;
-import com.goldze.mvvmhabit.entity.LoginEntity;
+import com.goldze.mvvmhabit.response.LoginRes;
 import com.goldze.mvvmhabit.ui.main.DemoActivity;
+import com.goldze.mvvmhabit.ui.tab_bar.activity.TabBarActivity;
 
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
@@ -20,6 +21,7 @@ import me.goldze.mvvmhabit.binding.command.BindingConsumer;
 import me.goldze.mvvmhabit.bus.event.SingleLiveEvent;
 import me.goldze.mvvmhabit.http.BaseResponse;
 import me.goldze.mvvmhabit.utils.RxUtils;
+import me.goldze.mvvmhabit.utils.SPUtils;
 import me.goldze.mvvmhabit.utils.ToastUtils;
 
 /**
@@ -109,18 +111,24 @@ public class LoginViewModel extends BaseViewModel<DemoRepository> {
                         showDialog();
                     }
                 })
-                .subscribe(new Consumer<BaseResponse<LoginEntity>>() {
+                .subscribe(new Consumer<BaseResponse<LoginRes>>() {
                     @Override
-                    public void accept(BaseResponse<LoginEntity> loginEntityBaseResponse) throws Exception {
+                    public void accept(BaseResponse<LoginRes> loginEntityBaseResponse) throws Exception {
                         dismissDialog();
-                        ToastUtils.showShort(loginEntityBaseResponse.getResult().getMessage());
-                        //保存账号密码
-                        model.saveUserName(userName.get());
-                        model.savePassword(password.get());
-                        //进入DemoActivity页面
-//                        startActivity(DemoActivity.class);
-                        //关闭页面
-//                        finish();
+                        if(!TextUtils.isEmpty(loginEntityBaseResponse.getResult().getAccess_token())){
+                            ToastUtils.showShort("登录成功");
+                            //保存账号密码
+                            model.saveUserName(userName.get());
+                            model.savePassword(password.get());
+                            //将token保存至缓存
+                            SPUtils.getInstance().put("token",loginEntityBaseResponse.getResult().getAccess_token());
+                            //进入DemoActivity页面
+                            startActivity(TabBarActivity.class);
+                            //关闭页面
+                            finish();
+                        }else {
+                            ToastUtils.showShort("登录失败");
+                        }
                     }
                 })
                 );

@@ -10,6 +10,8 @@ import android.support.annotation.VisibleForTesting;
 import com.goldze.mvvmhabit.data.DemoRepository;
 import com.goldze.mvvmhabit.ui.login.LoginViewModel;
 import com.goldze.mvvmhabit.ui.network.NetWorkViewModel;
+import com.goldze.mvvmhabit.ui.tab_bar.vm.BuyinfoRecyclerViewModel;
+import com.goldze.mvvmhabit.ui.tab_bar.vm.TabBarAppsViewModel;
 
 /**
  * Created by goldze on 2019/3/26.
@@ -48,6 +50,10 @@ public class AppViewModelFactory extends ViewModelProvider.NewInstanceFactory {
             return (T) new NetWorkViewModel(mApplication, mRepository);
         } else if (modelClass.isAssignableFrom(LoginViewModel.class)) {
             return (T) new LoginViewModel(mApplication, mRepository);
+        }else if (modelClass.isAssignableFrom(TabBarAppsViewModel.class)) {
+            return (T) new TabBarAppsViewModel(mApplication);
+        }else if (modelClass.isAssignableFrom(BuyinfoRecyclerViewModel.class)) {
+            return (T) new BuyinfoRecyclerViewModel(mApplication, mRepository);
         }
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
     }

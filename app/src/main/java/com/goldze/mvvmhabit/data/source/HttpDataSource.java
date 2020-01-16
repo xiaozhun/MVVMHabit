@@ -1,7 +1,10 @@
 package com.goldze.mvvmhabit.data.source;
 
 import com.goldze.mvvmhabit.entity.DemoEntity;
-import com.goldze.mvvmhabit.entity.LoginEntity;
+import com.goldze.mvvmhabit.response.BuyInfoRes;
+import com.goldze.mvvmhabit.response.LoginRes;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 import me.goldze.mvvmhabit.http.BaseResponse;
@@ -11,7 +14,12 @@ import me.goldze.mvvmhabit.http.BaseResponse;
  */
 public interface HttpDataSource {
     //模拟登录
-    Observable<BaseResponse<LoginEntity>> login(String username, String password);
+    Observable<BaseResponse<LoginRes>> login(String username, String password);
+    //获取登录名
+    Observable<BaseResponse> getLoginName();
+
+    //获取购买信息
+    Observable<BaseResponse<BuyInfoRes>> getBuyInfo(String symbol);
 
     //模拟上拉加载
     Observable<DemoEntity> loadMore();

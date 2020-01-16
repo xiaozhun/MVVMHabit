@@ -3,10 +3,14 @@ package com.goldze.mvvmhabit.data.source.http;
 import com.goldze.mvvmhabit.data.source.HttpDataSource;
 import com.goldze.mvvmhabit.data.source.http.service.DemoApiService;
 import com.goldze.mvvmhabit.entity.DemoEntity;
-import com.goldze.mvvmhabit.entity.LoginEntity;
+import com.goldze.mvvmhabit.request.LoginReq;
+import com.goldze.mvvmhabit.response.BuyInfoRes;
+import com.goldze.mvvmhabit.response.LoginRes;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
@@ -46,8 +50,21 @@ public class HttpDataSourceImpl implements HttpDataSource {
 //    }
 
     @Override
-    public Observable<BaseResponse<LoginEntity>> login(String username, String password) {
-        return apiService.loginPost(username,password);
+    public Observable<BaseResponse<LoginRes>> login(String username, String password) {
+        LoginReq loginReq=new LoginReq(username,password);
+        return apiService.loginPost(loginReq);
+    }
+
+    @Override
+    public Observable<BaseResponse> getLoginName() {
+        return apiService.getLoginName();
+    }
+
+    @Override
+    public Observable<BaseResponse<BuyInfoRes>> getBuyInfo(String symbol) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("symbol", symbol);
+        return apiService.getBuyResult(params);
     }
 
     @Override

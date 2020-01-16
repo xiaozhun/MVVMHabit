@@ -2,10 +2,11 @@ package com.goldze.mvvmhabit.utils;
 
 import android.content.Context;
 import android.text.TextUtils;
-
+import me.goldze.mvvmhabit.utils.SPUtils;
 import com.goldze.mvvmhabit.BuildConfig;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -23,7 +24,10 @@ import me.goldze.mvvmhabit.utils.KLog;
 import me.goldze.mvvmhabit.utils.Utils;
 import okhttp3.Cache;
 import okhttp3.ConnectionPool;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import okhttp3.internal.platform.Platform;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -39,7 +43,7 @@ public class RetrofitClient {
     //缓存时间
     private static final int CACHE_TIMEOUT = 10 * 1024 * 1024;
     //服务端根路径
-    public static String baseUrl = "http://192.168.31.198:5000/";
+    public static String baseUrl = "https://www.eosfog.net/";
 
     private static Context mContext = Utils.getContext();
 
@@ -95,6 +99,24 @@ public class RetrofitClient {
                         .addHeader("log-header", "I am the log request header.") // 添加打印头, 注意 key 和 value 都不能是中文
                         .build()
                 )
+                .addInterceptor(new Interceptor() {
+                    @Override
+                    public Response intercept(Chain chain) throws IOException {
+                        Request originalRequest = chain.request();
+                        String localtoken = SPUtils.getInstance().getString("token");
+                        String token = "Bearer "+localtoken;
+                        Boolean ishasAuth = originalRequest.headers().names().contains("Authorization");
+//                        KLog.d(111111111);
+//                        KLog.d(localtoken);
+                        if (localtoken == null || ishasAuth) {
+                            return chain.proceed(originalRequest);
+                        }
+                        Request authorised = originalRequest.newBuilder()
+                                .header("Authorization", token)
+                                .build();
+                        return chain.proceed(authorised);
+                    }
+                })
                 .connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
                 .writeTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
                 .connectionPool(new ConnectionPool(8, 15, TimeUnit.SECONDS))
